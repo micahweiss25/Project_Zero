@@ -1,6 +1,5 @@
 from tkinter import *
 
-
 master = Tk()
 
 # .minsize method sets the default size of the GUI as w=1000, h=500
@@ -11,17 +10,28 @@ master.minsize(width=1000, height=500)
 
 master.configure(background='white')
 
-# I'm going to try to display lines because IDK why
+# this is where the user inputs the name of the doc they want converted into a quiz
 
-line = Canvas(master, height=10, width=10)
-line.bbox()
+e = Entry(master)
+e.pack()
+e.delete(0, END)
+
+# assign entry to var file_name when button is pressed and create Text widget to display entry
+
+def bla():
+    file_name = e.get()
+    with open(file_name, "r") as f:
+        filedata = f.read()
+    T = Text(master, height=2, width=30)
+    T.pack(side=LEFT)
+    T.insert(END, filedata)
+
 # Button currently set to DISABLED bc program function has not been created yet
 
-run = Button(master, text="Create Quiz", compound=CENTER, background='green')
+run = Button(master, text="Create Quiz", compound=CENTER, background='green', command=bla)
 
 # run.pack actually packs the button onto the screen at the bottom
 
 run.pack(side=BOTTOM)
 
 master.mainloop()
-
