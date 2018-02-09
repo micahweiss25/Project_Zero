@@ -1,4 +1,6 @@
+import Tkinter
 from tkinter import *
+import ScrolledText
 
 master = Tk()
 
@@ -26,12 +28,39 @@ def bla():
     T.pack(side=LEFT)
     T.insert(END, filedata)
 
-# Button currently set to DISABLED bc program function has not been created yet
+# This function will up the text editor widget
+
+def openPad():
+    pad = Tkinter.Tk() # creates new GUI and all code between here and pad.mainloop() control that GUI
+    textPad = ScrolledText.ScrolledText(pad, width=100, height=80)
+    def dummy():
+        print "I am a Dummy Command, I will be removed in the next step"
+    menu = Menu(pad)
+    pad.config(menu=menu)
+    filemenu = Menu(menu)
+    menu.add_cascade(label="File", menu=filemenu)
+    filemenu.add_command(label="New", command=dummy)
+    filemenu.add_command(label="Open...", command=dummy)
+    filemenu.add_command(label="Save", command=dummy)
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=dummy)
+    helpmenu = Menu(menu)
+    menu.add_cascade(label="Help", menu=helpmenu)
+    helpmenu.add_command(label="About...", command=dummy)
+    textPad.pack()
+    pad.mainloop()
+
+
+# Button to create quiz
 
 run = Button(master, text="Create Quiz", compound=CENTER, background='green', command=bla)
-
-# run.pack actually packs the button onto the screen at the bottom
-
 run.pack(side=BOTTOM)
+
+# button to pull up a text editor
+
+note = Button(master, text="Start your notes", compound=CENTER, background='red', command=openPad)
+note.pack(side=BOTTOM)
+
+
 
 master.mainloop()
