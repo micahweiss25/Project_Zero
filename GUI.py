@@ -1,6 +1,9 @@
 import Tkinter
+
 from tkinter import *
-import ScrolledText
+from ScrolledText import *
+import tkFileDialog
+import tkMessageBox
 
 master = Tk()
 
@@ -28,17 +31,30 @@ def bla():
     T.pack(side=LEFT)
     T.insert(END, filedata)
 
-# This function will up the text editor widget
+# Menu functions
 
+    # save the notes
+def save_command(self):
+    file = tkFileDialog.asksaveasfile(mode='w')
+    if file != None:
+    # slice off the last character from get, as an extra return is added
+        data = self.textPad.get('1.0', END+'-1c')
+        file.write(data)
+        file.close()
+
+    # This function will actually create the quiz
+
+# This function will up the text editor widget
 def openPad():
     pad = Tkinter.Tk() # creates new GUI and all code between here and pad.mainloop() control that GUI
-    textPad = ScrolledText.ScrolledText(pad, width=100, height=80)
+    textPad = ScrolledText(pad, width=100, height=80)
     def dummy():
         print "I am a Dummy Command, I will be removed in the next step"
     menu = Menu(pad)
     pad.config(menu=menu)
     filemenu = Menu(menu)
     menu.add_cascade(label="File", menu=filemenu)
+    filemenu.add_command(label="Create Quiz", command=dummy)
     filemenu.add_command(label="New", command=dummy)
     filemenu.add_command(label="Open...", command=dummy)
     filemenu.add_command(label="Save", command=dummy)
@@ -51,7 +67,7 @@ def openPad():
     pad.mainloop()
 
 
-# Button currently set to DISABLED bc program function has not been created yet
+# Button to create quiz
 
 run = Button(master, text="Create Quiz", compound=CENTER, background='green', command=bla)
 run.pack(side=BOTTOM)
